@@ -16,6 +16,10 @@ An example of a React frontend connected to Firebase. The user can upload files 
 1. Clone this repository.
 2. In the terminal, navigate to the project directory, then enter `npm install`.
 
+## Development
+
+Known issues: images from file storage are displayed multiple times.
+
 ## Usage
 
 1. Enter `npm run start`.
