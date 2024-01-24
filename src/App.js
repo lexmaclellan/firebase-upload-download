@@ -23,13 +23,14 @@ function App() {
     })
   }
 
+  /* Fetch from Firestore */
   const handleRecordsForm = async (e) => {
     e.preventDefault()
 
     const querySnapshot = await getDocs(collection(db, 'recordsCollection'))
     const recs = []
     querySnapshot.forEach((doc) => {
-      recs.push(Object.values(doc.data()))
+      recs.push(doc.data())
     })
     setStoredRecords(recs)
   }
@@ -83,19 +84,19 @@ function App() {
           Save
         </button>
       </form>
+      
       <form onSubmit={handleRecordsForm}>
         <button>
           Load Records
         </button>
         <br />
         <div>
-          {storedRecords.map((item, index) => {
+          {storedRecords.map((item, index) => (
             <div key={index}>
-              {console.log(item[0] + ": " + item[1])}
-              <div className='bold'>{item[0]}</div>
-              <div>{item[1]}</div>
+              <div className='bold'>Name: {item.name}</div>
+              <div>Text: {item.text}</div>
             </div>
-          })}
+          ))}
         </div>
       </form>
 
