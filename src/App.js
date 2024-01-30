@@ -12,6 +12,7 @@ function App() {
   const [fileUpload, setFileUpload] = useState(null)
   const [fileList, setFileList] = useState([])
   const fileListRef = ref(storage, 'images/')
+  let pageLoaded = false
 
   /* Save to Firestore */
   const handleTextForm = async (e) => {
@@ -50,13 +51,16 @@ function App() {
 
   /* useEffects - Execute on page load */
   useEffect(() => {
-    listAll(fileListRef).then((res) => {
-      res.items.forEach((item) => {
-        getDownloadURL(item).then((url) => {
-          setFileList((prev) => [...prev, url])
+    if (!pageLoaded) {
+      listAll(fileListRef).then((res) => {
+        res.items.forEach((item) => {
+          getDownloadURL(item).then((url) => {
+            setFileList((prev) => [...prev, url])
+          })
         })
       })
-    })
+      pageLoaded = true
+    }
   }, [])
 
   /* HTML layout */
@@ -84,7 +88,7 @@ function App() {
           Save
         </button>
       </form>
-      
+
       <form onSubmit={handleRecordsForm}>
         <button>
           Load Records
